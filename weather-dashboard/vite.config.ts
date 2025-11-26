@@ -3,7 +3,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-   base: '/ReactITechArt/',
+   base: '/',
    test: {
     globals: true,
     environment: 'jsdom',
