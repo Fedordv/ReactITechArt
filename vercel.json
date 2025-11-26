@@ -1,9 +1,18 @@
 {
-  "build": {
-    "env": {},
-    "outputDirectory": "weather-dashboard/dist"
-  },
+  "version": 2,
+  "builds": [
+    {
+      "src": "weather-dashboard/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
   "routes": [
-    { "src": "/(.*)", "dest": "weather-dashboard/dist/$1" }
+    {
+      "src": "/(.*)",
+      "dest": "/dist/$1"
+    }
   ]
 }
