@@ -1,20 +1,21 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import ThemeToggle from './ThemeToggle';
-import UnitToggle from './UnitToggle';
+import ThemeToggle from '../ThemeToggle';
+import UnitToggle from '../UnitToggle';
+import { ROUTES } from '../../constants/routes';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  const links = [
-    { to: '/', label: 'Dashboard' },
-    { to: '/current', label: 'Current' },
-    { to: '/forecast', label: 'Forecast' },
-    { to: '/about', label: 'Common' },
-    { to: '/contacts', label: 'Contacts' },
-    { to: '/saved', label: 'Saved' },
+ const links = [
+    { to: ROUTES.DASHBOARD, label: 'Dashboard'},
+    { to: ROUTES.CURRENT, label: 'Current' },
+    { to: ROUTES.FORECAST, label: 'Forecast' },
+    { to: ROUTES.ABOUT, label: 'Common' },
+    { to: ROUTES.CONTACTS, label: 'Contacts'  },
+    { to: ROUTES.SAVED, label: 'Saved' },
   ];
 
   return (
@@ -24,7 +25,6 @@ export default function Header() {
           🌤 WeatherDash
         </span>
 
-        {/* Десктопная навигация */}
         <nav className="hidden md:flex gap-4 text-sm font-medium">
           {links.map(link => (
             <NavLink
@@ -41,12 +41,10 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Справа: всегда видимые кнопки */}
         <div className="flex items-center gap-2">
           <UnitToggle />
           <ThemeToggle />
 
-          {/* Бургер кнопка только для мобильных */}
           <button
             onClick={toggleMenu}
             className="flex flex-col justify-center items-center gap-1 w-8 h-8 md:hidden"
@@ -70,7 +68,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Мобильное меню */}
       <nav
         className={`md:hidden bg-white/95 dark:bg-slate-800/95 overflow-hidden transition-all ${
           isOpen ? 'max-h-60' : 'max-h-0'

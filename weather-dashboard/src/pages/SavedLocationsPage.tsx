@@ -1,10 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { type RootState } from '../redux/store';
-import { removeCity } from '../redux/savedLocationsSlice';
+import { removeCity, selectCity } from '../redux/savedLocationsSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function SavedLocationsPage() {
   const cities = useSelector((state: RootState) => state.savedLocations.cities);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleCityClick = (city: string) => {
+    dispatch(selectCity(city));   
+    navigate('/');       
+  };
 
   return (
     <div className="space-y-3">
@@ -14,13 +21,15 @@ export default function SavedLocationsPage() {
         {cities.map((city) => (
           <li
             key={city}
-            className="flex items-center justify-between rounded-md bg-white/80 px-3 py-2 text-sm shadow dark:bg-slate-800/80"
-          >
-            <span>{city}</span>
+            className="flex items-center justify-between rounded-md bg-white/80 px-3 py-2 text-sm shadow dark:bg-slate-800/80">
+            <span
+              onClick={() => handleCityClick(city)}
+              className="cursor-pointer hover:underline">
+              {city}
+            </span>
             <button
               onClick={() => dispatch(removeCity(city))}
-              className="text-xs text-red-500 hover:underline"
-            >
+              className="text-xs text-red-500 hover:underline">
               Remove
             </button>
           </li>

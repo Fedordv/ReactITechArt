@@ -16,11 +16,9 @@ function ThemedApp() {
     const root = document.documentElement;
     const body = document.body;
     
-    // Полностью очищаем классы темы
     root.classList.remove('light', 'dark');
     body.classList.remove('light', 'dark');
     
-    // Добавляем текущую тему
     root.classList.add(theme);
     body.classList.add(theme);
     

@@ -1,49 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
-import LoadingSpinner from "../UI/LoadingSpinner";
-import ErrorMessage from "../UI/ErrorMessage";
-import WeatherIcon from "../UI/WeatherIcon";
+import LoadingSpinner from "../components/LoadingSpinner";
+import ErrorMessage from "../components/ErrorMessage";
+import WeatherIcon from "../components/WeatherIcon";
+import { useGeolocation } from "../hooks/useGeolocation";
+import { useWeatherByCoords } from "../hooks/useWeatherByCoords";
 
 export default function CurrentLocationWeather() {
-  const [coords, setCoords] = useState<{ lat: number; lon: number } | null>(null);
-  const [geoError, setGeoError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!navigator.geolocation) {
-      setGeoError("Геолокация не поддерживается вашим браузером");
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setCoords({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-        });
-      },
-      () => {
-        setGeoError("Невозможно определить текущее местоположение");
-      }
-    );
-  }, []);
-
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["weather", "current-location", coords],
-    queryFn: async () => {
-      if (!coords) return null;
-
-      const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&units=metric&appid=${import.meta.env.VITE_OPENWEATHER_KEY}`
-      );
-      if (!res.ok) throw new Error("Ошибка загрузки данных");
-      return res.json();
-    },
-    enabled: !!coords,
-  });
+  const { coords, error: geoError, loading } = useGeolocation();
+  const { data, isLoading, error } = useWeatherByCoords(coords);
 
   if (geoError) return <ErrorMessage message={geoError} />;
-  if (isLoading || !coords) return <LoadingSpinner />;
+  if (loading || isLoading) return <LoadingSpinner />;
   if (error) return <ErrorMessage message="Ошибка загрузки" />;
+  if (!data) return null;
 
   return (
     <div className="max-w-xl mx-auto bg-white dark:bg-gray-800 shadow rounded p-6 mb-6">

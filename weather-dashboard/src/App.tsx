@@ -1,12 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout';
+import Layout from './components/Layout/Layout';
 import DashboardPage from './pages/DashboardPage';
 import AboutPage from './pages/AboutPage';
 import ContactsPage from './pages/ContactsPage';
 import SavedLocationsPage from './pages/SavedLocationsPage';
 import CurrentPage from './Weather/CurrentWeather';
 import ForecastPage from './Weather/Forecast';
-import NotFoundPage from './NotFoundPage/NotFoundPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
   return (

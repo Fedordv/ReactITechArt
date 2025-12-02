@@ -5,13 +5,22 @@ import { useWeather } from '../hooks/useWeather';
 import SearchBar from '../components/SearchBar';
 import WeatherCard from '../components/WeatherCard';
 import { addCity } from '../redux/savedLocationsSlice';
-import LoadingSpinner from '../UI/LoadingSpinner';
-import ErrorMessage from '../UI/ErrorMessage';
+import LoadingSpinner from '../components/LoadingSpinner';
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function DashboardPage() {
-  const [city, setCity] = React.useState('Minsk');
+  const selectedCity = useSelector((state: RootState) => state.savedLocations.selectedCity);
   const unit = useSelector((state: RootState) => state.settings.unit);
   const dispatch = useDispatch();
+
+  const [city, setCity] = React.useState(selectedCity || 'Minsk');
+
+  React.useEffect(() => {
+    if (selectedCity) {
+      setCity(selectedCity);
+    }
+  }, [selectedCity]);
+
   const { data, isLoading, isError, error } = useWeather(city, unit);
 
   const handleSearch = (newCity: string) => {
@@ -35,8 +44,7 @@ export default function DashboardPage() {
           <WeatherCard data={data} unit={unit} />
           <button
             onClick={handleSave}
-            className="rounded-md bg-emerald-500 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-600"
-          >
+            className="rounded-md bg-emerald-500 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-600">
             Save location
           </button>
         </div>
