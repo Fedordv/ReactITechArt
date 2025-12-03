@@ -2,21 +2,14 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import ThemeToggle from '../ThemeToggle';
 import UnitToggle from '../UnitToggle';
-import { ROUTES } from '../../constants/routes';
+import { NAV_LINKS } from '../../constants/navLinks';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
- const links = [
-    { to: ROUTES.DASHBOARD, label: 'Dashboard'},
-    { to: ROUTES.CURRENT, label: 'Current' },
-    { to: ROUTES.FORECAST, label: 'Forecast' },
-    { to: ROUTES.ABOUT, label: 'Common' },
-    { to: ROUTES.CONTACTS, label: 'Contacts'  },
-    { to: ROUTES.SAVED, label: 'Saved' },
-  ];
+ const links = NAV_LINKS
 
   return (
     <header className="border-b border-slate-200 bg-white/80 backdrop-blur dark:bg-slate-800/80">

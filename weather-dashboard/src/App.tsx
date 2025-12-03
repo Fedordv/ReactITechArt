@@ -4,8 +4,8 @@ import DashboardPage from './pages/DashboardPage';
 import AboutPage from './pages/AboutPage';
 import ContactsPage from './pages/ContactsPage';
 import SavedLocationsPage from './pages/SavedLocationsPage';
-import CurrentPage from './Weather/CurrentWeather';
-import ForecastPage from './Weather/Forecast';
+import CurrentPage from './pages/Weather/CurrentWeather';
+import ForecastPage from './pages/Weather/Forecast';
 import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {

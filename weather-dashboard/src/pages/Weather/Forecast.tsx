@@ -1,22 +1,21 @@
-// src/Weather/Forecast.tsx
-import LoadingSpinner from "../components/LoadingSpinner";
-import ErrorMessage from "../components/ErrorMessage";
-import WeatherIcon from "../components/WeatherIcon";
-import { useGeolocation } from "../hooks/useGeolocation";
-import { useForecastByCoords } from "../hooks/useForecastByCoords";
-import { formatDate } from "../utils/date";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import ErrorMessage from "../../components/ErrorMessage";
+import WeatherIcon from "../../components/WeatherIcon";
+import { useGeolocation } from "../../hooks/useGeolocation";
+import { useForecastByCoords } from "../../hooks/useForecastByCoords";
+import { formatDate } from "../../utils/date";
+import { getFiveDaysForecast } from "../../utils/forecast";
 
 export default function Forecast() {
   const { coords, error: geoError, loading } = useGeolocation();
-  const { data, isLoading, error } = useForecastByCoords(coords);
+  const { data, isPending, error } = useForecastByCoords(coords);
 
   if (geoError) return <ErrorMessage message={geoError} />;
-  if (loading || isLoading) return <LoadingSpinner />;
+  if (loading || isPending) return <LoadingSpinner />;
   if (error) return <ErrorMessage message="Ошибка загрузки прогноза" />;
   if (!data || !data.list) return <ErrorMessage message="Данные недоступны" />;
 
-  const daily = data.list.filter((item: any) => item.dt_txt.includes("12:00:00"));
-  const fiveDays = daily.slice(0, 5);
+  const fiveDays = getFiveDaysForecast(data.list);
 
   return (
     <div>
@@ -25,7 +24,7 @@ export default function Forecast() {
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        {fiveDays.map((item: any) => (
+        {fiveDays.map(item => (
           <div
             key={item.dt}
             className="bg-white dark:bg-gray-800 p-4 rounded shadow text-center"

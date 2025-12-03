@@ -1,8 +1,8 @@
-import LoadingSpinner from "../components/LoadingSpinner";
-import ErrorMessage from "../components/ErrorMessage";
-import WeatherIcon from "../components/WeatherIcon";
-import { useGeolocation } from "../hooks/useGeolocation";
-import { useWeatherByCoords } from "../hooks/useWeatherByCoords";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import ErrorMessage from "../../components/ErrorMessage";
+import WeatherIcon from "../../components/WeatherIcon";
+import { useGeolocation } from "../../hooks/useGeolocation";
+import { useWeatherByCoords } from "../../hooks/useWeatherByCoords";
 
 export default function CurrentLocationWeather() {
   const { coords, error: geoError, loading } = useGeolocation();
