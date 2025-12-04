@@ -9,7 +9,6 @@ export default function Header() {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
- const links = NAV_LINKS
 
   return (
     <header className="border-b border-slate-200 bg-white/80 backdrop-blur dark:bg-slate-800/80">
@@ -19,7 +18,7 @@ export default function Header() {
         </span>
 
         <nav className="hidden md:flex gap-4 text-sm font-medium">
-          {links.map(link => (
+          {NAV_LINKS.map(link => (
             <NavLink
               key={link.to}
               to={link.to}
@@ -67,7 +66,7 @@ export default function Header() {
         }`}
       >
         <ul className="flex flex-col px-4 py-2 gap-2">
-          {links.map(link => (
+          {NAV_LINKS.map(link => (
             <NavLink
               key={link.to}
               to={link.to}

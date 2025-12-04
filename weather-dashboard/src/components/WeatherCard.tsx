@@ -1,4 +1,5 @@
 import { type WeatherResponse } from '../api/weatherApi';
+import { useWeatherDetails } from '../hooks/useWeatherDetails';
 
 interface Props {
   data: WeatherResponse;
@@ -6,22 +7,12 @@ interface Props {
 }
 
 export default function WeatherCard({ data, unit }: Props) {
-  const tempUnit = unit === 'metric' ? '°C' : '°F';
-  const speedUnit = unit === 'metric' ? 'm/s' : 'mph';
-
-  const icon = data.weather[0]?.icon;
-
-  const sunrise = new Date(data.sys.sunrise * 1000).toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
-  const sunset = new Date(data.sys.sunset * 1000).toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+  const { tempUnit, speedUnit, icon, sunrise, sunset } =
+    useWeatherDetails(data, unit);
 
   return (
     <div className="rounded-2xl bg-white/80 p-6 shadow-md backdrop-blur dark:bg-slate-800/80 dark:text-slate-200">
+
       {/* HEADER */}
       <div className="flex items-center justify-between">
         <div>
@@ -46,6 +37,7 @@ export default function WeatherCard({ data, unit }: Props) {
           {Math.round(data.main.temp)}
           {tempUnit}
         </span>
+
         <span className="text-md text-slate-600 dark:text-slate-400">
           Feels like {Math.round(data.main.feels_like)}
           {tempUnit}
@@ -93,6 +85,7 @@ export default function WeatherCard({ data, unit }: Props) {
         </div>
       </div>
 
+      {/* SUN */}
       <div className="mt-6 flex items-center justify-between text-sm">
         <div>
           <p className="text-xs text-slate-500">Sunrise</p>
@@ -103,6 +96,7 @@ export default function WeatherCard({ data, unit }: Props) {
           <p className="font-semibold">{sunset}</p>
         </div>
       </div>
+
     </div>
   );
 }
