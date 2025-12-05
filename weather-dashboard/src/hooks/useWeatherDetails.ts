@@ -1,4 +1,4 @@
-import type { WeatherResponse } from "../api/weatherApi";
+import type { WeatherResponse } from "@/api/weatherApi";
 
 export function useWeatherDetails(data: WeatherResponse, unit: "metric" | "imperial") {
   const tempUnit = unit === "metric" ? "°C" : "°F";

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import ThemeToggle from '../ThemeToggle';
-import UnitToggle from '../UnitToggle';
-import { NAV_LINKS } from '../../constants/navLinks';
+import UnitToggle from '../UnitToggle/index';
+import { NAV_LINKS } from '@/constants/navLinks';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);

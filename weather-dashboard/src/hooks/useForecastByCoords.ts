@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchForecastByCoords } from "../api/weatherApi";
+import { fetchForecastByCoords } from "@/api/weatherApi";
 
 export const useForecastByCoords = (coords: { lat: number; lon: number } | null) => {
   return useQuery({

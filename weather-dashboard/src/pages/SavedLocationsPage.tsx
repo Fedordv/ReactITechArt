@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { type RootState } from '../redux/store';
-import { removeCity, selectCity } from '../redux/savedLocationsSlice';
+import { type RootState } from '@/redux/store';
+import { removeCity, selectCity } from '@/redux/savedLocationsSlice';
 import { useNavigate } from 'react-router-dom';
 
 export default function SavedLocationsPage() {

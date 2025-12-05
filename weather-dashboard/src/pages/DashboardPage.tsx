@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { type RootState } from '../redux/store';
-import { useWeather } from '../hooks/useWeather';
-import SearchBar from '../components/SearchBar';
-import WeatherCard from '../components/WeatherCard';
-import { addCity } from '../redux/savedLocationsSlice';
-import LoadingSpinner from '../components/LoadingSpinner';
-import ErrorMessage from '../components/ErrorMessage';
+import { type RootState } from '@/redux/store';
+import { useWeather } from '@/hooks/useWeather';
+import SearchBar from '@/components/SearchBar';
+import WeatherCard from '@/components/WeatherCard';
+import { addCity } from '@/redux/savedLocationsSlice';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import ErrorMessage from '@/components/ErrorMessage';
 
 export default function DashboardPage() {
   const selectedCity = useSelector((state: RootState) => state.savedLocations.selectedCity);

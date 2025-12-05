@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom';
-import Header from '../Layout/Header';
-import Footer from '../Layout/Footer';
+import Header from './Header';
+import Footer from './Footer';
 import { useSelector } from 'react-redux';
-import type { RootState } from '../../redux/store';
+import type { RootState } from '@/redux/store';
 
 export default function Layout() {
   const theme = useSelector((state: RootState) => state.settings.theme);

@@ -1,10 +1,10 @@
-import LoadingSpinner from "../../components/LoadingSpinner";
-import ErrorMessage from "../../components/ErrorMessage";
-import WeatherIcon from "../../components/WeatherIcon";
-import { useGeolocation } from "../../hooks/useGeolocation";
-import { useForecastByCoords } from "../../hooks/useForecastByCoords";
-import { formatDate } from "../../utils/date";
-import { getFiveDaysForecast } from "../../utils/forecast";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import ErrorMessage from "@/components/ErrorMessage";
+import WeatherIcon from "@/components/WeatherIcon";
+import { useGeolocation } from "@/hooks/useGeolocation";
+import { useForecastByCoords } from "@/hooks/useForecastByCoords";
+import { formatDate } from "@/utils/date";
+import { getFiveDaysForecast } from "@/utils/forecast";
 
 export default function Forecast() {
   const { coords, error: geoError, loading } = useGeolocation();

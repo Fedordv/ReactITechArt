@@ -1,11 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout/index';
+import Layout from './components/Layout/Layout';
 import DashboardPage from './pages/DashboardPage';
 import AboutPage from './pages/AboutPage';
 import ContactsPage from './pages/ContactsPage';
 import SavedLocationsPage from './pages/SavedLocationsPage';
-import CurrentPage from './pages/CurrentWeatherPages/CurrentWeather';
-import ForecastPage from './pages/CurrentWeatherPages/Forecast';
+import CurrentPage from './pages/CurrentWeather';
+import ForecastPage from './pages/Forecast';
 import NotFoundPage from './pages/NotFoundPage';
 import { ROUTES } from './constants/routes';
 

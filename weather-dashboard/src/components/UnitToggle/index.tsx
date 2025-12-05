@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { type RootState } from '../redux/store';
-import { setUnit } from '../redux/settingsSlice';
-import UnitToggleItem from './UnitToggle/UnitToggleItem';
+import { type RootState } from '@/redux/store';
+import { setUnit } from '@/redux/settingsSlice';
+import UnitToggleItem from './UnitToggleItem';
 
 export default function UnitToggle() {
     const unit = useSelector((state: RootState) => state.settings.unit)

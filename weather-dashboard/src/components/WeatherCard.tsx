@@ -1,5 +1,5 @@
-import { type WeatherResponse } from '../api/weatherApi';
-import { useWeatherDetails } from '../hooks/useWeatherDetails';
+import { type WeatherResponse } from '@/api/weatherApi';
+import { useWeatherDetails } from '@/hooks/useWeatherDetails';
 
 interface Props {
   data: WeatherResponse;
