@@ -4,8 +4,8 @@ import DashboardPage from './pages/DashboardPage';
 import AboutPage from './pages/AboutPage';
 import ContactsPage from './pages/ContactsPage';
 import SavedLocationsPage from './pages/SavedLocationsPage';
-import CurrentPage from './pages/CurrentWeather';
-import ForecastPage from './pages/Forecast';
+import CurrentPage from './pages/CurrentWeatherPages';
+import ForecastPage from './pages/ForecastPages';
 import NotFoundPage from './pages/NotFoundPage';
 import { ROUTES } from './constants/routes';
 
