@@ -13,33 +13,21 @@ export class WeatherService {
   ) {}
 
   async getWeather(city: string) {
-    if (!city) throw new Error('City is required');
+  const cached = await this.cacheModel.findOne({ city });
 
-    const cached = await this.cacheModel.findOne({ city });
-    if (cached && cached.updatedAt > new Date(Date.now() - 60000)) {
-      return cached.data;
-    }
-
-    try {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
-        city,
-      )}&appid=${this.cfg.weatherApiKey}&units=metric`;
-
-      console.log('Request URL:', url);
-
-      const { data } = await axios.get(url);
-
-   
-      await this.cacheModel.findOneAndUpdate(
-        { city },
-        { data, updatedAt: new Date() },
-        { upsert: true },
-      );
-
-      return data;
-    } catch (err: any) {
-      console.error('Weather API Error:', err.response?.data || err.message);
-      throw new Error('Failed to fetch weather');
-    }
+  if (cached && cached.updatedAt > new Date(Date.now() - 60000)) {
+    return cached.data;
   }
+
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${this.cfg.weatherApiKey}&units=metric`;
+  const response = await axios.get(url);
+
+  await this.cacheModel.findOneAndUpdate(
+    { city },
+    { data: response.data, updatedAt: new Date() },
+    { upsert: true }
+  );
+
+  return response.data;
+}
 }
