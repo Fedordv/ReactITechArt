@@ -19,8 +19,8 @@ export class WeatherService {
     return cached.data;
   }
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${this.cfg.weatherApiKey}&units=metric`;
-  const response = await axios.get(url);
+const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${this.cfg.weatherApiKey}&units=metric`;
+const response = await axios.get(url);
 
   await this.cacheModel.findOneAndUpdate(
     { city },
