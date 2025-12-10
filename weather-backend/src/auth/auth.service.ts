@@ -20,7 +20,7 @@ export class AuthService {
     const user = await this.userModel.create({
       email: dto.email,
       password: hashed,
-      role: 'user',
+      role: dto.role || 'user',
     });
 
     return { message: 'User created', id: user._id };

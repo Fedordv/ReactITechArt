@@ -8,7 +8,7 @@ export class User {
     @Prop()
     password: string
 
-    @Prop({default: 'admin'})
+    @Prop({default: 'user'})
     role: string
 }
 
