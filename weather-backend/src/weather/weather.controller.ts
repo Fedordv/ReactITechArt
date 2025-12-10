@@ -7,7 +7,7 @@ import { ApiKeyGuard } from '../common/guards/api-key.guard';
 export class WeatherСontroller {
     constructor(private service: WeatherService) {}
 
-  @UseGuards(ApiKeyGuard)
+  // @UseGuards(ApiKeyGuard)
   @Get()
   getWeather(@Query() dto: GetWeatherDto) {
     return this.service.getWeather(dto.city);
