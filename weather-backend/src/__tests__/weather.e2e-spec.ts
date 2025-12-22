@@ -2,10 +2,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import request from 'supertest';
-import { WeatherСontroller } from '../weather/weather.controller';
-import { WeatherService } from '../weather/weather.service';
-import { ApiKeyGuard } from '../common/guards/api-key.guard';
-import { ConfigService } from '../config/config.service';
+import { WeatherController } from '@/weather/weather.controller';
+import { WeatherService } from '@/weather/weather.service';
+import { ApiKeyGuard } from '@/common/guards/api-key.guard';
+import { ConfigService } from '@/config/config.service';
 
 describe('Weather API (e2e)', () => {
   let app: INestApplication;
@@ -19,7 +19,7 @@ describe('Weather API (e2e)', () => {
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [WeatherСontroller],
+      controllers: [WeatherController],
       providers: [
         { provide: WeatherService, useValue: mockWeatherService },
         ConfigService,

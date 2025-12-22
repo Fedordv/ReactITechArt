@@ -8,4 +8,5 @@ export class ConfigService {
   readonly jwtExpiresIn = Number(process.env.JWT_EXPIRES_IN ?? 604800);
   readonly apiKey = process.env.API_KEY!;
   readonly weatherApiKey = process.env.WEATHER_API_KEY!;
+  readonly weatherApiUrl = process.env.WEATHER_API_URL;
 }

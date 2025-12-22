@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
@@ -16,6 +16,7 @@ export class AuthService {
   ) {}
 
   async register(dto: RegisterDto) {
+  try {
     const hashed = await bcrypt.hash(dto.password, 10);
 
     const user = await this.userModel.create({
@@ -23,8 +24,11 @@ export class AuthService {
       password: hashed,
       role: Role.USER,
     });
+    } catch (error) {
+      throw new BadRequestException('User registration failed');
+    }
 
-    return { message: 'User created', id: user._id };
+    return { message: 'User created', id: User._id };
   }
 
   async login(dto: LoginDto) {

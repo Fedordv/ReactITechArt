@@ -21,7 +21,7 @@ export class WeatherService {
 
     try {
       const response = await axios.get(
-        'https://api.openweathermap.org/data/2.5/weather',
+       this.cfg.weatherApiUrl!,
         {
           params: {
             q: city,

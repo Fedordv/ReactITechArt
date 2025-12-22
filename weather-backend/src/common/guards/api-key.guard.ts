@@ -2,10 +2,11 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from
 import { ConfigService } from '../../config/config.service';
 import { Observable } from 'rxjs';
 
+
 @Injectable()
 export class ApiKeyGuard implements CanActivate {
     constructor(private cfg: ConfigService) {}
-
+    
     canActivate(ctx: ExecutionContext): boolean {
         const req = ctx.switchToHttp().getRequest();
         const apiKey = req.headers['x-api-key'];
