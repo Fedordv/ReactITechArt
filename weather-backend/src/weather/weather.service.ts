@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { WeatherCache } from './schemas/weather-cache.schema';
 import { Model } from 'mongoose';
@@ -12,22 +12,41 @@ export class WeatherService {
     private cfg: ConfigService,
   ) {}
 
-  async getWeather(city: string) {
-  const cached = await this.cacheModel.findOne({ city });
+    async getWeather(city: string) {
+    const cached = await this.cacheModel.findOne({ city });
 
-  if (cached && cached.updatedAt > new Date(Date.now() - 60000)) {
-    return cached.data;
+    if (cached) {
+      return cached.data;
+    }
+
+    try {
+      const response = await axios.get(
+        'https://api.openweathermap.org/data/2.5/weather',
+        {
+          params: {
+            q: city,
+            appid: this.cfg.weatherApiKey,
+            units: 'metric',
+          },
+          timeout: 5000,
+        },
+      );
+
+      await this.cacheModel.findOneAndUpdate(
+        { city },
+        { data: response.data },
+        { upsert: true },
+      );
+
+      return response.data;
+    } catch (error: any) {
+      if (error.response?.status === 404) {
+        throw new BadRequestException('City not found');
+      }
+
+      throw new InternalServerErrorException(
+        'Failed to fetch weather data',
+      );
+    }
   }
-
-const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${this.cfg.weatherApiKey}&units=metric`;
-const response = await axios.get(url);
-
-  await this.cacheModel.findOneAndUpdate(
-    { city },
-    { data: response.data, updatedAt: new Date() },
-    { upsert: true }
-  );
-
-  return response.data;
-}
 }

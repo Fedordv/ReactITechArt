@@ -6,6 +6,7 @@ import * as bcrypt from 'bcryptjs';
 import { User } from './schemas/user.schema';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { Role } from './enums/role.enum';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +21,7 @@ export class AuthService {
     const user = await this.userModel.create({
       email: dto.email,
       password: hashed,
-      role: dto.role || 'user',
+      role: Role.USER,
     });
 
     return { message: 'User created', id: user._id };

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { WeatherСontroller } from './weather.controller';
+import { WeatherController } from './weather.controller';
 import { WeatherService } from './weather.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { WeatherCache, WeatherCacheSchema } from './schemas/weather-cache.schema';
@@ -19,7 +19,7 @@ import { CacheModule } from '@nestjs/cache-manager';
         ]),
         ConfigModule,
     ],
-    controllers: [WeatherСontroller],
+    controllers: [WeatherController],
     providers: [WeatherService]
 })
 
