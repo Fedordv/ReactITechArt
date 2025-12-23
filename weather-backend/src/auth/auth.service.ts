@@ -1,6 +1,10 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { JwtService } from '@nestjs/jwt';
+  import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
 import { User } from './schemas/user.schema';
@@ -16,29 +20,45 @@ export class AuthService {
   ) {}
 
   async register(dto: RegisterDto) {
-  try {
-    const hashed = await bcrypt.hash(dto.password, 10);
+    const exists = await this.userModel.findOne({ email: dto.email });
+    if (exists) {
+      throw new BadRequestException('User already exists');
+    }
 
-    const user = await this.userModel.create({
-      email: dto.email,
-      password: hashed,
-      role: Role.USER,
-    });
+    try {
+      const hashed = await bcrypt.hash(dto.password, 10);
+
+      const user = await this.userModel.create({
+        email: dto.email,
+        password: hashed,
+        role: Role.USER,
+      });
+
+      return {
+        id: user._id,
+        email: user.email,
+        role: user.role,
+      };
     } catch (error) {
       throw new BadRequestException('User registration failed');
     }
-
-    return { message: 'User created', id: User._id };
   }
 
   async login(dto: LoginDto) {
     const user = await this.userModel.findOne({ email: dto.email });
-    if (!user) throw new UnauthorizedException();
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
 
     const valid = await bcrypt.compare(dto.password, user.password);
-    if (!valid) throw new UnauthorizedException();
+    if (!valid) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
 
-    const token = this.jwt.sign({ id: user._id, role: user.role });
+    const token = this.jwt.sign({
+      sub: user._id,
+      role: user.role,
+    });
 
     return { token };
   }

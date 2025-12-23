@@ -1,51 +1,66 @@
+import 'dotenv/config';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import { UserSchema } from '../auth/schemas/user.schema';
-import { ConfigService } from '../config/config.service';
+import { Role } from '../auth/enums/role.enum';
 
-const cfg = new ConfigService();
+function requireEnv(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`Environment variable ${name} is not set`);
+  }
+  return value;
+}
+
+const mongoUri = requireEnv('MONGO_URI');
+const ADMIN_EMAIL = requireEnv('ADMIN_EMAIL');
+const ADMIN_PASSWORD = requireEnv('ADMIN_PASSWORD');
+
+function getUserModel() {
+  return mongoose.models.User || mongoose.model('User', UserSchema);
+}
 
 export async function up() {
-  await mongoose.connect(
-    cfg.mongoUri ?? 'mongodb://127.0.0.1:27017/weather-app',
-  );
+  await mongoose.connect(mongoUri);
 
-  const User = mongoose.model('User', UserSchema);
+  const User = getUserModel();
 
-  const email = process.env.ADMIN_EMAIL;
-  const password = process.env.ADMIN_PASSWORD;
-
-  if (!email || !password) {
-    throw new Error('ADMIN_EMAIL or ADMIN_PASSWORD is not defined');
-  }
-
-  const exists = await User.findOne({ email });
+  const exists = await User.findOne({ email: ADMIN_EMAIL });
   if (exists) {
     console.log('Admin already exists');
-    process.exit(0);
+    await mongoose.disconnect();
+    return;
   }
 
-  const hash = await bcrypt.hash(password, 10);
+  const hash = await bcrypt.hash(ADMIN_PASSWORD, 10);
 
   await User.create({
-    email,
+    email: ADMIN_EMAIL,
     password: hash,
-    role: 'admin',
+    role: Role.ADMIN,
   });
 
   console.log('Admin created');
-  process.exit(0);
+
+  await mongoose.disconnect();
 }
 
 export async function down() {
-  await mongoose.connect(
-    cfg.mongoUri ?? 'mongodb://127.0.0.1:27017/weather-app',
-  );
+  await mongoose.connect(mongoUri);
 
-  await mongoose.connection
-    .collection('users')
-    .deleteOne({ email: process.env.ADMIN_EMAIL });
+  const User = getUserModel();
+  await User.deleteOne({ email: ADMIN_EMAIL });
 
-  console.log('Admin removed');
-  process.exit(0);
+  console.log(' Admin removed');
+
+  await mongoose.disconnect();
+}
+
+if (require.main === module) {
+  const action = process.argv[2];
+  if (action === 'down') {
+    down().catch(console.error);
+  } else {
+    up().catch(console.error);
+  }
 }
