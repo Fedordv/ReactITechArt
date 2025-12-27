@@ -8,7 +8,6 @@ export class WeatherCache extends Document {
   city: string;
 
   @Prop({ type: mongoose.Schema.Types.Mixed, required: true })
-  data: any;
-}
+  data: Record<string, unknown>}
 
 export const WeatherCacheSchema = SchemaFactory.createForClass(WeatherCache);

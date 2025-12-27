@@ -1,11 +1,13 @@
+import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Model, Mongoose } from 'mongoose';
+
+import { ConfigModule } from '@/config/config.module';
+
+import { WeatherCache, WeatherCacheSchema } from './schemas/weather-cache.schema';
 import { WeatherController } from './weather.controller';
 import { WeatherService } from './weather.service';
-import { MongooseModule } from '@nestjs/mongoose';
-import { WeatherCache, WeatherCacheSchema } from './schemas/weather-cache.schema';
-import { Model, Mongoose } from 'mongoose';
-import { ConfigModule } from '@/config/config.module';
-import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
     imports: [
