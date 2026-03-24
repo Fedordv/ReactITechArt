@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Styles for light theme */
+:root, .light {
+  --background: 241 245 249;  /* slate-100 */
+  --foreground: 15 23 42;     /* slate-900 */
+  --card: 255 255 255;        /* white */
+  --card-foreground: 15 23 42; /* slate-900 */
+}
+
+/* Dark theme colors */
+.dark {
+  --background: 2 6 23;       /* slate-950 -  */
+  --foreground: 248 250 252;  /* slate-50 -  */
+  --card: 15 23 42;           /* slate-900  */
+  --card-foreground: 248 250 252; /* slate-50 -  */
+}
+
+body {
+  background-color: rgb(var(--background)) !important;
+  color: rgb(var(--foreground)) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+}
+
+.card {
+  background-color: rgb(var(--card)) !important;
+  color: rgb(var(--card-foreground)) !important;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.dark .card {
+  border: 1px solid rgb(71 85 105) !important; /* slate-600 show borders */
+}
+
+.card:hover {
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+* {
+  transition: background-color 0.3s ease, 
+              border-color 0.3s ease, 
+              color 0.3s ease,
+              box-shadow 0.3s ease;
+}
