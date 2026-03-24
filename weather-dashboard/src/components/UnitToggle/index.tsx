@@ -13,12 +13,14 @@ export default function UnitToggle() {
         unit="°C"
         active={unit === 'metric'}
         onClick={() => dispatch(setUnit('metric'))}
+        className="rounded-l-lg border-r-0"
       />
 
       <UnitToggleItem
         unit="°F"
         active={unit === 'imperial'}
         onClick={() => dispatch(setUnit('imperial'))}
+        className="rounded-r-lg"
       />
     </div>
   )
